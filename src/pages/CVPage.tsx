@@ -1,9 +1,11 @@
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Download, Award, Briefcase, GraduationCap, Users, Globe2 } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useProfile } from '../hooks/useProfile';
 
 const CVPage = () => {
   const { language } = useLanguage();
+  const { profile, loading } = useProfile();
 
   const content = {
     en: {
@@ -143,7 +145,6 @@ const CVPage = () => {
 
   return (
     <div className="min-h-screen pt-16">
-      {/* Hero Section */}
       <section className="relative py-20 bg-gradient-to-br from-indigo-500 via-purple-500 to-blue-500 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 animate-gradient-shift bg-[length:200%_200%] text-white">
         <div className="section-container">
           <motion.div
@@ -153,16 +154,19 @@ const CVPage = () => {
             variants={staggerContainerVariants}
             className="flex flex-col md:flex-row items-center gap-8"
           >
-            {/* Profile Image */}
             <motion.div
               variants={fadeInUpVariants}
               className="w-48 h-48 rounded-full overflow-hidden border-4 border-white/20 shadow-xl"
             >
-              <img
-                src="https://i.imgur.com/dKHsWNQ.png"
-                alt="Pandu Tirta Buana"
-                className="w-full h-full object-cover"
-              />
+              {loading ? (
+                <div className="w-full h-full bg-gray-300 animate-pulse" />
+              ) : (
+                <img
+                  src={profile?.photo_url || "https://i.imgur.com/dKHsWNQ.png"}
+                  alt="Pandu Tirta Buana"
+                  className="w-full h-full object-cover"
+                />
+              )}
             </motion.div>
 
             <motion.div variants={fadeInUpVariants}>
@@ -171,7 +175,6 @@ const CVPage = () => {
                 {language === 'en' ? 'Multimedia Designer' : 'Multimedia Desainer'}
               </p>
               
-              {/* Contact Info in Hero */}
               <div className="flex flex-col gap-2 text-white/80">
                 <div className="flex items-center gap-2">
                   <MapPin className="w-4 h-4" />
@@ -191,11 +194,9 @@ const CVPage = () => {
         </div>
       </section>
 
-      {/* CV Content */}
       <section className="py-16 bg-gray-50 dark:bg-gray-900">
         <div className="section-container">
           <div className="max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
-            {/* Summary Section */}
             <motion.div
               initial="hidden"
               whileInView="visible"
@@ -207,7 +208,6 @@ const CVPage = () => {
               <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{t.summary}</p>
             </motion.div>
 
-            {/* Experience Section */}
             <motion.div
               initial="hidden"
               whileInView="visible"
@@ -240,7 +240,6 @@ const CVPage = () => {
               </div>
             </motion.div>
 
-            {/* Education Section */}
             <motion.div
               initial="hidden"
               whileInView="visible"
@@ -263,7 +262,6 @@ const CVPage = () => {
               </motion.div>
             </motion.div>
 
-            {/* Projects Section */}
             <motion.div
               initial="hidden"
               whileInView="visible"
@@ -314,7 +312,6 @@ const CVPage = () => {
               </div>
             </motion.div>
 
-            {/* Skills Section */}
             <motion.div
               initial="hidden"
               whileInView="visible"
@@ -358,7 +355,6 @@ const CVPage = () => {
               </div>
             </motion.div>
 
-            {/* Languages Section */}
             <motion.div
               initial="hidden"
               whileInView="visible"
@@ -387,7 +383,6 @@ const CVPage = () => {
             </motion.div>
           </div>
 
-          {/* Download CV Button */}
           <motion.div
             initial="hidden"
             whileInView="visible"
